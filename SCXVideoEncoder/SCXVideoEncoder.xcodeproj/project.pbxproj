@@ -17,6 +17,8 @@
 		E8B16FCE2385296500AA222A /* SCXVideoEncoderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B16FCD2385296500AA222A /* SCXVideoEncoderTests.m */; };
 		E8B16FD92385296500AA222A /* SCXVideoEncoderUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B16FD82385296500AA222A /* SCXVideoEncoderUITests.m */; };
 		E8B16FEA23852CF000AA222A /* test.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E8B16FE923852CF000AA222A /* test.mp4 */; };
+		E8B16FEF23852F5F00AA222A /* SCXVideoEncoderSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B16FEE23852F5F00AA222A /* SCXVideoEncoderSettings.m */; };
+		E8B16FF22385337700AA222A /* SCXVideoCodecInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B16FF12385337700AA222A /* SCXVideoCodecInfo.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +58,10 @@
 		E8B16FD82385296500AA222A /* SCXVideoEncoderUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCXVideoEncoderUITests.m; sourceTree = "<group>"; };
 		E8B16FDA2385296500AA222A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E8B16FE923852CF000AA222A /* test.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.mp4; sourceTree = "<group>"; };
+		E8B16FED23852F5F00AA222A /* SCXVideoEncoderSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCXVideoEncoderSettings.h; sourceTree = "<group>"; };
+		E8B16FEE23852F5F00AA222A /* SCXVideoEncoderSettings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCXVideoEncoderSettings.m; sourceTree = "<group>"; };
+		E8B16FF02385337700AA222A /* SCXVideoCodecInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCXVideoCodecInfo.h; sourceTree = "<group>"; };
+		E8B16FF12385337700AA222A /* SCXVideoCodecInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCXVideoCodecInfo.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,7 +112,7 @@
 		E8B16FB02385296200AA222A /* SCXVideoEncoder */ = {
 			isa = PBXGroup;
 			children = (
-				E8B16FE62385299A00AA222A /* Resource */,
+				E8B16FEB23852F1A00AA222A /* VideoEncoder */,
 				E8B16FB12385296200AA222A /* AppDelegate.h */,
 				E8B16FB22385296200AA222A /* AppDelegate.m */,
 				E8B16FB42385296200AA222A /* SceneDelegate.h */,
@@ -118,6 +124,7 @@
 				E8B16FBF2385296500AA222A /* LaunchScreen.storyboard */,
 				E8B16FC22385296500AA222A /* Info.plist */,
 				E8B16FC32385296500AA222A /* main.m */,
+				E8B16FE62385299A00AA222A /* Resource */,
 			);
 			path = SCXVideoEncoder;
 			sourceTree = "<group>";
@@ -146,6 +153,25 @@
 				E8B16FE923852CF000AA222A /* test.mp4 */,
 			);
 			path = Resource;
+			sourceTree = "<group>";
+		};
+		E8B16FEB23852F1A00AA222A /* VideoEncoder */ = {
+			isa = PBXGroup;
+			children = (
+				E8B16FEC23852F2600AA222A /* Config */,
+			);
+			path = VideoEncoder;
+			sourceTree = "<group>";
+		};
+		E8B16FEC23852F2600AA222A /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				E8B16FED23852F5F00AA222A /* SCXVideoEncoderSettings.h */,
+				E8B16FEE23852F5F00AA222A /* SCXVideoEncoderSettings.m */,
+				E8B16FF02385337700AA222A /* SCXVideoCodecInfo.h */,
+				E8B16FF12385337700AA222A /* SCXVideoCodecInfo.m */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -280,7 +306,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				E8B16FB92385296200AA222A /* ViewController.m in Sources */,
+				E8B16FEF23852F5F00AA222A /* SCXVideoEncoderSettings.m in Sources */,
 				E8B16FB32385296200AA222A /* AppDelegate.m in Sources */,
+				E8B16FF22385337700AA222A /* SCXVideoCodecInfo.m in Sources */,
 				E8B16FC42385296500AA222A /* main.m in Sources */,
 				E8B16FB62385296200AA222A /* SceneDelegate.m in Sources */,
 			);
