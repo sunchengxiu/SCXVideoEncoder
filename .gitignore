@@ -62,4 +62,4 @@ fastlane/test_output
 
 iOSInjectionProject/
 
-SCXVideoEncoder/SCXVideoEncoder/Resource/*
+SCXVideoEncoder/SCXVideoEncoder/Resource/test.mp4
