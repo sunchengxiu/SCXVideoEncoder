@@ -104,6 +104,7 @@
 		E8B16FB02385296200AA222A /* SCXVideoEncoder */ = {
 			isa = PBXGroup;
 			children = (
+				E8B16FE62385299A00AA222A /* Resource */,
 				E8B16FB12385296200AA222A /* AppDelegate.h */,
 				E8B16FB22385296200AA222A /* AppDelegate.m */,
 				E8B16FB42385296200AA222A /* SceneDelegate.h */,
@@ -135,6 +136,13 @@
 				E8B16FDA2385296500AA222A /* Info.plist */,
 			);
 			path = SCXVideoEncoderUITests;
+			sourceTree = "<group>";
+		};
+		E8B16FE62385299A00AA222A /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
