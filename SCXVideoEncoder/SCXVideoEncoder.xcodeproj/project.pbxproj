@@ -16,6 +16,7 @@
 		E8B16FC42385296500AA222A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B16FC32385296500AA222A /* main.m */; };
 		E8B16FCE2385296500AA222A /* SCXVideoEncoderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B16FCD2385296500AA222A /* SCXVideoEncoderTests.m */; };
 		E8B16FD92385296500AA222A /* SCXVideoEncoderUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B16FD82385296500AA222A /* SCXVideoEncoderUITests.m */; };
+		E8B16FE823852A5800AA222A /* alien-covenant.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E8B16FE723852A5800AA222A /* alien-covenant.mp4 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		E8B16FD42385296500AA222A /* SCXVideoEncoderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SCXVideoEncoderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8B16FD82385296500AA222A /* SCXVideoEncoderUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCXVideoEncoderUITests.m; sourceTree = "<group>"; };
 		E8B16FDA2385296500AA222A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E8B16FE723852A5800AA222A /* alien-covenant.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "alien-covenant.mp4"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +143,7 @@
 		E8B16FE62385299A00AA222A /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				E8B16FE723852A5800AA222A /* alien-covenant.mp4 */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -249,6 +252,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E8B16FC12385296500AA222A /* LaunchScreen.storyboard in Resources */,
+				E8B16FE823852A5800AA222A /* alien-covenant.mp4 in Resources */,
 				E8B16FBE2385296500AA222A /* Assets.xcassets in Resources */,
 				E8B16FBC2385296200AA222A /* Main.storyboard in Resources */,
 			);
