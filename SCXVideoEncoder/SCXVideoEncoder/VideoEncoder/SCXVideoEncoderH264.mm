@@ -1,14 +1,14 @@
 //
-//  SCXVideoCodecH264.m
+//  SCXVideoEncoderH264.m
 //  SCXVideoEncoder
 //
 //  Created by 孙承秀 on 2019/11/20.
 //  Copyright © 2019 RongCloud. All rights reserved.
 //
 
-#import "SCXVideoCodecH264.h"
+#import "SCXVideoEncoderH264.h"
 #import <VideoToolbox/VideoToolbox.h>
-@interface SCXVideoCodecH264()
+@interface SCXVideoEncoderH264()
 
 - (void)frameWasEncoded:(OSStatus)status
                   flags:(VTEncodeInfoFlags)infoFlags
@@ -36,7 +36,7 @@ struct SCXFrameEncodeParams {
     
 };
 
-@implementation SCXVideoCodecH264
+@implementation SCXVideoEncoderH264
 
 -(instancetype)initWithVideoCodecInfo:(SCXVideoCodecInfo *)info{
     if (self = [super init]) {

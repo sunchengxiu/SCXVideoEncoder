@@ -1,5 +1,5 @@
 //
-//  SCXVideoCodecH264.h
+//  SCXVideoEncoderH264.h
 //  SCXVideoEncoder
 //
 //  Created by 孙承秀 on 2019/11/20.
@@ -11,7 +11,7 @@
 #import "SCXVideoCodecInfo.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SCXVideoCodecH264 : NSObject<SCXVideoEncoder>
+@interface SCXVideoEncoderH264 : NSObject<SCXVideoEncoder>
 - (instancetype)initWithVideoCodecInfo:(SCXVideoCodecInfo *)info;
 @end
 
