@@ -19,6 +19,9 @@
 		E8B16FEA23852CF000AA222A /* test.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E8B16FE923852CF000AA222A /* test.mp4 */; };
 		E8B16FEF23852F5F00AA222A /* SCXVideoEncoderSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B16FEE23852F5F00AA222A /* SCXVideoEncoderSettings.m */; };
 		E8B16FF22385337700AA222A /* SCXVideoCodecInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B16FF12385337700AA222A /* SCXVideoCodecInfo.m */; };
+		E8B16FF7238539C400AA222A /* SCXEncodedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B16FF6238539C400AA222A /* SCXEncodedImage.m */; };
+		E8B16FFA23853CA100AA222A /* SCXVideoFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B16FF923853CA100AA222A /* SCXVideoFrame.m */; };
+		E8B17000238544FB00AA222A /* SCXVideoCodecH264.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B16FFF238544FB00AA222A /* SCXVideoCodecH264.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +65,14 @@
 		E8B16FEE23852F5F00AA222A /* SCXVideoEncoderSettings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCXVideoEncoderSettings.m; sourceTree = "<group>"; };
 		E8B16FF02385337700AA222A /* SCXVideoCodecInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCXVideoCodecInfo.h; sourceTree = "<group>"; };
 		E8B16FF12385337700AA222A /* SCXVideoCodecInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCXVideoCodecInfo.m; sourceTree = "<group>"; };
+		E8B16FF4238538F800AA222A /* SCXVideoEncoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCXVideoEncoder.h; sourceTree = "<group>"; };
+		E8B16FF5238539C400AA222A /* SCXEncodedImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCXEncodedImage.h; sourceTree = "<group>"; };
+		E8B16FF6238539C400AA222A /* SCXEncodedImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCXEncodedImage.m; sourceTree = "<group>"; };
+		E8B16FF823853CA100AA222A /* SCXVideoFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCXVideoFrame.h; sourceTree = "<group>"; };
+		E8B16FF923853CA100AA222A /* SCXVideoFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCXVideoFrame.m; sourceTree = "<group>"; };
+		E8B16FFB23853D2E00AA222A /* SCXVideoFrameBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCXVideoFrameBuffer.h; sourceTree = "<group>"; };
+		E8B16FFE238544FB00AA222A /* SCXVideoCodecH264.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCXVideoCodecH264.h; sourceTree = "<group>"; };
+		E8B16FFF238544FB00AA222A /* SCXVideoCodecH264.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCXVideoCodecH264.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,7 +169,15 @@
 		E8B16FEB23852F1A00AA222A /* VideoEncoder */ = {
 			isa = PBXGroup;
 			children = (
+				E8B16FF32385385200AA222A /* Protocol */,
 				E8B16FEC23852F2600AA222A /* Config */,
+				E8B16FF5238539C400AA222A /* SCXEncodedImage.h */,
+				E8B16FF6238539C400AA222A /* SCXEncodedImage.m */,
+				E8B16FFB23853D2E00AA222A /* SCXVideoFrameBuffer.h */,
+				E8B16FF823853CA100AA222A /* SCXVideoFrame.h */,
+				E8B16FF923853CA100AA222A /* SCXVideoFrame.m */,
+				E8B16FFE238544FB00AA222A /* SCXVideoCodecH264.h */,
+				E8B16FFF238544FB00AA222A /* SCXVideoCodecH264.m */,
 			);
 			path = VideoEncoder;
 			sourceTree = "<group>";
@@ -172,6 +191,14 @@
 				E8B16FF12385337700AA222A /* SCXVideoCodecInfo.m */,
 			);
 			path = Config;
+			sourceTree = "<group>";
+		};
+		E8B16FF32385385200AA222A /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				E8B16FF4238538F800AA222A /* SCXVideoEncoder.h */,
+			);
+			path = Protocol;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -305,7 +332,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8B17000238544FB00AA222A /* SCXVideoCodecH264.m in Sources */,
 				E8B16FB92385296200AA222A /* ViewController.m in Sources */,
+				E8B16FF7238539C400AA222A /* SCXEncodedImage.m in Sources */,
+				E8B16FFA23853CA100AA222A /* SCXVideoFrame.m in Sources */,
 				E8B16FEF23852F5F00AA222A /* SCXVideoEncoderSettings.m in Sources */,
 				E8B16FB32385296200AA222A /* AppDelegate.m in Sources */,
 				E8B16FF22385337700AA222A /* SCXVideoCodecInfo.m in Sources */,
