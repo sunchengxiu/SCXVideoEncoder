@@ -7,9 +7,10 @@
 //
 
 #import "SCXVideoEncoderH264.h"
-#import <VideoToolbox/VideoToolbox.h>
 #import "SCXCodecSpecificInfoH264.h"
 #import "helpers.h"
+#import <VideoToolbox/VideoToolbox.h>
+#import "SCXVideoEncoderErrorCodes.h"
 @interface SCXVideoEncoderH264()
 
 - (void)frameWasEncoded:(OSStatus)status
@@ -58,7 +59,13 @@ struct SCXFrameEncodeParams {
     uint32_t timeStamp;
     SCXVideoRotation rotation;
 };
-
+void compressionOutputCallback(void *encoder,
+void *params,
+OSStatus status,
+VTEncodeInfoFlags infoFlags,
+                               CMSampleBufferRef sampleBuffer){
+    
+}
 @implementation SCXVideoEncoderH264{
     SCXVideoCodecInfo *_codecInfo;
     SCXH264PacketizationMode _packetizationMode;
@@ -67,7 +74,7 @@ struct SCXFrameEncodeParams {
     SCXVideoCodecMode _mode;
     uint32_t _targetBitrateBps ;
     uint32_t _encoderBitrateBps ;
-    VTCompressionSessionRef *_compressionSession;
+    VTCompressionSessionRef _compressionSession;
     uint32_t _encoderFrameRate;
     uint32_t _maxFrameRate;
 }
@@ -88,6 +95,7 @@ struct SCXFrameEncodeParams {
     _mode = settings.mode;
     _targetBitrateBps = settings.startBitrate * 1000;
     _maxFrameRate = settings.maxFramerate;
+    [self resetCompressionSessionWithPixelFormat:kNV12PixelFormat];
     [self setBitrateBps:_targetBitrateBps frameRate:_maxFrameRate];
     return 1;
 }
@@ -122,6 +130,48 @@ struct SCXFrameEncodeParams {
         }
         _encoderFrameRate = frameRate;
         _encoderBitrateBps = bitrateBps;
+    }
+}
+- (int)resetCompressionSessionWithPixelFormat:(OSType)framePixelFormat{
+    [self destroyCompressionSession];
+    const size_t attributeSize = 3;
+    CFTypeRef keys[attributeSize] = {
+        kCVPixelBufferOpenGLCompatibilityKey,
+        kCVPixelBufferIOSurfacePropertiesKey,
+        kCVPixelBufferPixelFormatTypeKey
+    };
+    CFDictionaryRef IOSurfaceValue = CreateCFTypeDictionary(nullptr, nullptr, 0);
+    int64_t pixelFormatType = framePixelFormat;
+    CFNumberRef pixelFormat = CFNumberCreate(nullptr, kCFNumberLongType, &pixelFormatType);
+    CFTypeRef values[attributeSize] = {kCFBooleanTrue,IOSurfaceValue,pixelFormat};
+    CFDictionaryRef sourceAttribute = CreateCFTypeDictionary(keys, values, attributeSize);
+    if (IOSurfaceValue) {
+        CFRelease(IOSurfaceValue);
+        IOSurfaceValue = nullptr;
+    }
+    if (pixelFormat) {
+        CFRelease(pixelFormat);
+        pixelFormat = nullptr;
+    }
+    OSStatus status = VTCompressionSessionCreate(nullptr, _width, _height, kCMVideoCodecType_H264, nullptr, sourceAttribute, nullptr, compressionOutputCallback, nullptr, &_compressionSession);
+    if (sourceAttribute) {
+        CFRelease(sourceAttribute);
+        sourceAttribute = nullptr;
+    }
+    if (status != noErr) {
+        return SCX_VIDEO_CODEC_ERROR;
+    }
+    [self configureCompressionSession];
+    return SCX_VIDEO_CODEC_OK;
+}
+- (void)configureCompressionSession {
+    
+}
+- (void)destroyCompressionSession{
+    if (_compressionSession) {
+        VTCompressionSessionInvalidate(_compressionSession);
+        CFRelease(_compressionSession);
+        _compressionSession = nullptr;
     }
 }
 @end

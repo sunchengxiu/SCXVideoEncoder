@@ -12,7 +12,13 @@
 #include <VideoToolbox/VideoToolbox.h>
 #include <string>
 
-
+inline CFDictionaryRef CreateCFTypeDictionary(CFTypeRef* keys,
+                                              CFTypeRef* values,
+                                              size_t size) {
+  return CFDictionaryCreate(kCFAllocatorDefault, keys, values, size,
+                            &kCFTypeDictionaryKeyCallBacks,
+                            &kCFTypeDictionaryValueCallBacks);
+}
 // Convenience function for setting a VT property.
 void SetVTSessionProperty(VTSessionRef session, CFStringRef key, int32_t value);
 

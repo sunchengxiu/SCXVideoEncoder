@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "SCXVideoEncoder.h"
 #import "SCXVideoCodecInfo.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SCXVideoEncoderH264 : NSObject<SCXVideoEncoder>

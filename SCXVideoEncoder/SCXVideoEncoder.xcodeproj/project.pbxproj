@@ -26,7 +26,7 @@
 		E8B1700923863AAA00AA222A /* SCXVideoEncoderQpThresholds.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B1700823863AAA00AA222A /* SCXVideoEncoderQpThresholds.m */; };
 		E8B1700C23866CD600AA222A /* SCXCodecSpecificInfoH264.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B1700B23866CD600AA222A /* SCXCodecSpecificInfoH264.m */; };
 		E8B170152387813900AA222A /* helpers.cc in Sources */ = {isa = PBXBuildFile; fileRef = E8B170142387813900AA222A /* helpers.cc */; };
-		E8B17018238787B900AA222A /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8B17017238787B900AA222A /* VideoToolbox.framework */; };
+		E8E1901F2387DE3F00F75798 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8B17017238787B900AA222A /* VideoToolbox.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E8140E282387EC3400AAB4C4 /* SCXVideoEncoderErrorCodes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCXVideoEncoderErrorCodes.h; sourceTree = "<group>"; };
 		E8B16FAE2385296200AA222A /* SCXVideoEncoder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SCXVideoEncoder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8B16FB12385296200AA222A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E8B16FB22385296200AA222A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -95,7 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E8B17018238787B900AA222A /* VideoToolbox.framework in Frameworks */,
+				E8E1901F2387DE3F00F75798 /* VideoToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,6 +204,7 @@
 				E8B16FFF238544FB00AA222A /* SCXVideoEncoderH264.mm */,
 				E8B170132387813900AA222A /* helpers.h */,
 				E8B170142387813900AA222A /* helpers.cc */,
+				E8140E282387EC3400AAB4C4 /* SCXVideoEncoderErrorCodes.h */,
 			);
 			path = VideoEncoder;
 			sourceTree = "<group>";
@@ -548,6 +550,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9CVMN4UZK4;
 				INFOPLIST_FILE = SCXVideoEncoder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -564,6 +567,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9CVMN4UZK4;
 				INFOPLIST_FILE = SCXVideoEncoder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
