@@ -9,6 +9,7 @@
 #import "SCXVideoEncoderH264.h"
 #import <VideoToolbox/VideoToolbox.h>
 #import "SCXCodecSpecificInfoH264.h"
+#import "helpers.h"
 @interface SCXVideoEncoderH264()
 
 - (void)frameWasEncoded:(OSStatus)status
@@ -66,6 +67,9 @@ struct SCXFrameEncodeParams {
     SCXVideoCodecMode _mode;
     uint32_t _targetBitrateBps ;
     uint32_t _encoderBitrateBps ;
+    VTCompressionSessionRef *_compressionSession;
+    uint32_t _encoderFrameRate;
+    uint32_t _maxFrameRate;
 }
 
 -(instancetype)initWithVideoCodecInfo:(SCXVideoCodecInfo *)info{
@@ -83,12 +87,41 @@ struct SCXFrameEncodeParams {
     _height = settings.height;
     _mode = settings.mode;
     _targetBitrateBps = settings.startBitrate * 1000;
-    if (_encoderBitrateBps != _targetBitrateBps) {
-        [self setTargetEncoderBitrateBps:_targetBitrateBps];
-    }
+    _maxFrameRate = settings.maxFramerate;
+    [self setBitrateBps:_targetBitrateBps frameRate:_maxFrameRate];
     return 1;
 }
-- (void)setTargetEncoderBitrateBps:(uint32_t)bitrateBps{
-    
+
+- (void)setBitrateBps:(uint32_t)bitrateBps frameRate:(uint32_t)frameRate {
+  if (_encoderBitrateBps != bitrateBps || _encoderFrameRate != frameRate) {
+    [self setEncoderBitrateBps:bitrateBps frameRate:frameRate];
+  }
+}
+- (void)setEncoderBitrateBps:(uint32_t)bitrateBps frameRate:(uint32_t)frameRate{
+    if (_compressionSession) {
+        SetVTSessionProperty(_compressionSession, kVTCompressionPropertyKey_AverageBitRate, bitrateBps);
+        SetVTSessionProperty(_compressionSession, kVTCompressionPropertyKey_ExpectedFrameRate, frameRate);
+        int64_t datasLimitBytesPerSecondValue = static_cast<int64_t>(bitrateBps * kLimitToAverageBitRateFactor / 8);
+        CFNumberRef bytesPersecond = CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt64Type, &datasLimitBytesPerSecondValue);
+        int64_t oneSecondValue = 1;
+        CFNumberRef oneSecond = CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt64Type, &oneSecond);
+        const void *nums[2] = {bytesPersecond,oneSecond};
+        CFArrayRef dataRateLimits = CFArrayCreate(nullptr, nums, 2, &kCFTypeArrayCallBacks);
+        OSStatus status = VTSessionSetProperty(_compressionSession, kVTCompressionPropertyKey_DataRateLimits, dataRateLimits);
+        if (bytesPersecond) {
+            CFRelease(bytesPersecond);
+        }
+        if (oneSecond) {
+            CFRelease(oneSecond);
+        }
+        if (dataRateLimits) {
+            CFRelease(dataRateLimits);
+        }
+        if (status != noErr) {
+            NSLog(@"setEncoderBitrateBps error : %@",@(status));
+        }
+        _encoderFrameRate = frameRate;
+        _encoderBitrateBps = bitrateBps;
+    }
 }
 @end
