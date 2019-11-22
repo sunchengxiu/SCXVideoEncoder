@@ -25,6 +25,8 @@
 		E8B170062386345400AA222A /* SCXRtpFragmentationHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B170052386345400AA222A /* SCXRtpFragmentationHeader.m */; };
 		E8B1700923863AAA00AA222A /* SCXVideoEncoderQpThresholds.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B1700823863AAA00AA222A /* SCXVideoEncoderQpThresholds.m */; };
 		E8B1700C23866CD600AA222A /* SCXCodecSpecificInfoH264.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B1700B23866CD600AA222A /* SCXCodecSpecificInfoH264.m */; };
+		E8B170152387813900AA222A /* helpers.cc in Sources */ = {isa = PBXBuildFile; fileRef = E8B170142387813900AA222A /* helpers.cc */; };
+		E8B17018238787B900AA222A /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8B17017238787B900AA222A /* VideoToolbox.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +85,9 @@
 		E8B1700823863AAA00AA222A /* SCXVideoEncoderQpThresholds.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCXVideoEncoderQpThresholds.m; sourceTree = "<group>"; };
 		E8B1700A23866CD600AA222A /* SCXCodecSpecificInfoH264.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCXCodecSpecificInfoH264.h; sourceTree = "<group>"; };
 		E8B1700B23866CD600AA222A /* SCXCodecSpecificInfoH264.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCXCodecSpecificInfoH264.m; sourceTree = "<group>"; };
+		E8B170132387813900AA222A /* helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = helpers.h; sourceTree = "<group>"; };
+		E8B170142387813900AA222A /* helpers.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = helpers.cc; sourceTree = "<group>"; };
+		E8B17017238787B900AA222A /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8B17018238787B900AA222A /* VideoToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +123,7 @@
 				E8B16FCC2385296500AA222A /* SCXVideoEncoderTests */,
 				E8B16FD72385296500AA222A /* SCXVideoEncoderUITests */,
 				E8B16FAF2385296200AA222A /* Products */,
+				E8B17016238787B900AA222A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -194,6 +201,8 @@
 				E8B1700B23866CD600AA222A /* SCXCodecSpecificInfoH264.m */,
 				E8B16FFE238544FB00AA222A /* SCXVideoEncoderH264.h */,
 				E8B16FFF238544FB00AA222A /* SCXVideoEncoderH264.mm */,
+				E8B170132387813900AA222A /* helpers.h */,
+				E8B170142387813900AA222A /* helpers.cc */,
 			);
 			path = VideoEncoder;
 			sourceTree = "<group>";
@@ -216,6 +225,14 @@
 				E8B17003238633C500AA222A /* SCXCodecSpecificInfo.h */,
 			);
 			path = Protocol;
+			sourceTree = "<group>";
+		};
+		E8B17016238787B900AA222A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E8B17017238787B900AA222A /* VideoToolbox.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -360,6 +377,7 @@
 				E8B16FF22385337700AA222A /* SCXVideoCodecInfo.m in Sources */,
 				E8B16FC42385296500AA222A /* main.m in Sources */,
 				E8B16FB62385296200AA222A /* SceneDelegate.m in Sources */,
+				E8B170152387813900AA222A /* helpers.cc in Sources */,
 				E8B1700C23866CD600AA222A /* SCXCodecSpecificInfoH264.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
