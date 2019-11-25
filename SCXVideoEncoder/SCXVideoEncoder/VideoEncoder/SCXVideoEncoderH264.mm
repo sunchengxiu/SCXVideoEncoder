@@ -12,6 +12,8 @@
 #import <VideoToolbox/VideoToolbox.h>
 #import "SCXVideoEncoderErrorCodes.h"
 #import "SCXCVPixelBuffer.h"
+
+constexpr int64_t kNumNanosecsPerMillisec = 1000000;
 @interface SCXVideoEncoderH264()
 
 - (void)frameWasEncoded:(OSStatus)status
@@ -80,6 +82,7 @@ VTEncodeInfoFlags infoFlags,
     uint32_t _maxFrameRate;
     CFStringRef _profileId;
     SCXVideoEncoderCallback _callback;
+    CVPixelBufferPoolRef _pixelBufferPool;
 }
 
 -(instancetype)initWithVideoCodecInfo:(SCXVideoCodecInfo *)info{
@@ -141,11 +144,76 @@ VTEncodeInfoFlags infoFlags,
     if ( !_compressionSession) {
         return SCX_VIDEO_CODEC_UNINITIALIZED;
     }
+    BOOL isKeyFrameRequired = NO;
+    if ([self resetCompressionSessionIfNeededWithFrame:frame]) {
+        isKeyFrameRequired = YES;
+    }
+    CVPixelBufferRef pixelBuffer = nullptr;
+    if ([frame.buffer isKindOfClass:[SCXCVPixelBuffer class]]) {
+        SCXCVPixelBuffer *selfPixelBuffer = (SCXCVPixelBuffer *)frame.buffer;
+        if (selfPixelBuffer) {
+            pixelBuffer = selfPixelBuffer.pixelBuffer;
+        }
+    }
+    if (!pixelBuffer) {
+        pixelBuffer = CreatePixelBuffer(_pixelBufferPool);
+        if (!pixelBuffer) {
+            return SCX_VIDEO_CODEC_ERROR;
+        }
+    }
+    if (!isKeyFrameRequired && frameTypes) {
+        for (NSNumber *type in frameTypes) {
+            if ((SCXFrameType)type.intValue == SCXFrameTypeVideoFrameKey) {
+                isKeyFrameRequired = YES;
+                break;
+            }
+        }
+    }
+    CMTime pts = CMTimeMake(frame.timeStampNs / kNumNanosecsPerMillisec, 1000);
+    CFDictionaryRef framePropertys = nullptr;
+    if (isKeyFrameRequired) {
+        CFTypeRef keys[] = {kVTEncodeFrameOptionKey_ForceKeyFrame};
+        CFTypeRef values[] = {kCFBooleanTrue};
+        framePropertys = CreateCFTypeDictionary(keys, values, 0);
+    }
+    std::unique_ptr<SCXFrameEncodeParams> encodeParams;
+    encodeParams.reset(new SCXFrameEncodeParams(self,info,_width,_height,frame.timeStampNs / kNumNanosecsPerMillisec , frame.timeStamp,frame.rotation));
+    encodeParams->codecSpecificInfoH264.packetizationMode = _packetizationMode;
+    OSStatus status = VTCompressionSessionEncodeFrame(_compressionSession, pixelBuffer, pts, kCMTimeInvalid, framePropertys, encodeParams.release(), nullptr);
+    if (framePropertys) {
+        CFRelease(framePropertys);
+    }
+    if (pixelBuffer) {
+        CVBufferRelease(pixelBuffer);
+    }
+    if (status != noErr) {
+        return SCX_VIDEO_CODEC_ERROR;
+    }
     return SCX_VIDEO_CODEC_OK;
 }
 - (BOOL)resetCompressionSessionIfNeededWithFrame:(SCXVideoFrame *)frame {
     BOOL resetCompressionSession = NO;
-    return YES;
+    OSType framePixelFormat = [self pixelFormatOfFrame:frame];
+    if (_compressionSession) {
+        NSDictionary *poolAttributes = (__bridge NSDictionary *)CVPixelBufferPoolGetAttributes(_pixelBufferPool);
+           id pixelFormats = [poolAttributes objectForKey:(__bridge NSString *)kCVPixelBufferPixelFormatTypeKey];
+           NSArray<NSNumber *> *compressionPixelFormats = nil;
+           if ([pixelFormats isKindOfClass:[NSArray class]]) {
+               compressionPixelFormats = (NSArray *)pixelFormats;
+           } else if ([pixelFormats isKindOfClass:[NSNumber class]]){
+               compressionPixelFormats = @[(NSNumber *)pixelFormats];
+           }
+        if (![compressionPixelFormats containsObject:[NSNumber numberWithLong:framePixelFormat]]) {
+            resetCompressionSession = YES;
+        }
+    } else {
+        resetCompressionSession = YES;
+    }
+   
+    if (resetCompressionSession) {
+        [self resetCompressionSessionWithPixelFormat:framePixelFormat];
+    }
+    return resetCompressionSession;
 }
 - (OSType)pixelFormatOfFrame:(SCXVideoFrame *)frame{
     if ([frame isKindOfClass:[SCXVideoFrame class]]) {
@@ -185,6 +253,7 @@ VTEncodeInfoFlags infoFlags,
         return SCX_VIDEO_CODEC_ERROR;
     }
     [self configureCompressionSession];
+    _pixelBufferPool = VTCompressionSessionGetPixelBufferPool(_compressionSession);
     return SCX_VIDEO_CODEC_OK;
 }
 - (void)configureCompressionSession {
@@ -194,6 +263,19 @@ VTEncodeInfoFlags infoFlags,
     [self setEncoderBitrateBps:_targetBitrateBps frameRate:_encoderFrameRate];
     SetVTSessionProperty(_compressionSession, kVTCompressionPropertyKey_MaxKeyFrameInterval, 7200);
     SetVTSessionProperty(_compressionSession, kVTCompressionPropertyKey_MaxKeyFrameIntervalDuration, 24);
+}
+CVPixelBufferRef CreatePixelBuffer(CVPixelBufferPoolRef pixelBufferPool){
+    if (!pixelBufferPool) {
+        NSLog(@"failed to get pixel buffer pool");
+        return nullptr;
+    }
+    CVPixelBufferRef pixelBuffer ;
+    CVReturn ret = CVPixelBufferPoolCreatePixelBuffer(nullptr, pixelBufferPool, &pixelBuffer);
+    if (ret != kCVReturnSuccess) {
+        NSLog(@"faile to create pixel buffer");
+        return nullptr;
+    }
+    return pixelBuffer;
 }
 - (void)destroyCompressionSession{
     if (_compressionSession) {

@@ -23,6 +23,8 @@ typedef NS_ENUM(NSInteger, SCXVideoRotation) {
 
 @property(nonatomic, readonly) int height;
 @property(nonatomic, readonly) int64_t timeStampNs;
+@property(nonatomic, readonly) SCXVideoRotation rotation;
+@property(nonatomic, assign) int32_t timeStamp;
 @property(nonatomic, readonly) id<SCXVideoFrameBuffer> buffer;
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype) new NS_UNAVAILABLE;
