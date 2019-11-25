@@ -21,7 +21,7 @@ typedef BOOL (^SCXVideoEncoderCallback)(SCXEncodedImage *frame , id <SCXCodecSpe
 - (NSInteger)startEncoderWithSettings:(SCXVideoEncoderSettings *)settings numberOfCores:(int)cores;
 - (NSInteger)releaseEncoder;
 - (NSInteger)encode:(SCXVideoFrame *)frame codecSpecificInfo:(nullable id<SCXCodecSpecificInfo>)info frameTypes:(NSArray <NSNumber *>*)frameTypes;
-- (int)setBitrate:(uint32_t)bitrateKbit frameRate:(uint32_t)frameRate;
+- (void)setBitrateBps:(uint32_t)bitrateBps frameRate:(uint32_t)frameRate;
 - (NSString *)implementionName;
 
 /** Returns QP scaling settings for encoder. The quality scaler adjusts the resolution in order to

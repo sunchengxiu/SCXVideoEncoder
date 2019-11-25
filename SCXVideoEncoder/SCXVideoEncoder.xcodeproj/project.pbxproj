@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E829D26A238B84CB009DADFD /* SCXCVPixelBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = E829D268238B84CA009DADFD /* SCXCVPixelBuffer.m */; };
 		E8B16FB32385296200AA222A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B16FB22385296200AA222A /* AppDelegate.m */; };
 		E8B16FB62385296200AA222A /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B16FB52385296200AA222A /* SceneDelegate.m */; };
 		E8B16FB92385296200AA222A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B16FB82385296200AA222A /* ViewController.m */; };
@@ -48,6 +49,8 @@
 
 /* Begin PBXFileReference section */
 		E8140E282387EC3400AAB4C4 /* SCXVideoEncoderErrorCodes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCXVideoEncoderErrorCodes.h; sourceTree = "<group>"; };
+		E829D268238B84CA009DADFD /* SCXCVPixelBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCXCVPixelBuffer.m; sourceTree = "<group>"; };
+		E829D269238B84CA009DADFD /* SCXCVPixelBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCXCVPixelBuffer.h; sourceTree = "<group>"; };
 		E8B16FAE2385296200AA222A /* SCXVideoEncoder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SCXVideoEncoder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8B16FB12385296200AA222A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E8B16FB22385296200AA222A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -194,6 +197,8 @@
 				E8B16FFB23853D2E00AA222A /* SCXVideoFrameBuffer.h */,
 				E8B16FF823853CA100AA222A /* SCXVideoFrame.h */,
 				E8B16FF923853CA100AA222A /* SCXVideoFrame.m */,
+				E829D269238B84CA009DADFD /* SCXCVPixelBuffer.h */,
+				E829D268238B84CA009DADFD /* SCXCVPixelBuffer.m */,
 				E8B170042386345400AA222A /* SCXRtpFragmentationHeader.h */,
 				E8B170052386345400AA222A /* SCXRtpFragmentationHeader.m */,
 				E8B1700723863AAA00AA222A /* SCXVideoEncoderQpThresholds.h */,
@@ -370,6 +375,7 @@
 			files = (
 				E8B17000238544FB00AA222A /* SCXVideoEncoderH264.mm in Sources */,
 				E8B16FB92385296200AA222A /* ViewController.m in Sources */,
+				E829D26A238B84CB009DADFD /* SCXCVPixelBuffer.m in Sources */,
 				E8B16FF7238539C400AA222A /* SCXEncodedImage.m in Sources */,
 				E8B16FFA23853CA100AA222A /* SCXVideoFrame.m in Sources */,
 				E8B170062386345400AA222A /* SCXRtpFragmentationHeader.m in Sources */,

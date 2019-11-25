@@ -12,5 +12,5 @@
 
 #define SCX_VIDEO_CODEC_OK 0
 #define SCX_VIDEO_CODEC_ERROR -1
-
+#define SCX_VIDEO_CODEC_UNINITIALIZED -7
 #endif /* SCXVideoEncoderErrorCodes_h */

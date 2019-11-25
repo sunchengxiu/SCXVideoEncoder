@@ -11,6 +11,7 @@
 #import "helpers.h"
 #import <VideoToolbox/VideoToolbox.h>
 #import "SCXVideoEncoderErrorCodes.h"
+#import "SCXCVPixelBuffer.h"
 @interface SCXVideoEncoderH264()
 
 - (void)frameWasEncoded:(OSStatus)status
@@ -77,12 +78,15 @@ VTEncodeInfoFlags infoFlags,
     VTCompressionSessionRef _compressionSession;
     uint32_t _encoderFrameRate;
     uint32_t _maxFrameRate;
+    CFStringRef _profileId;
+    SCXVideoEncoderCallback _callback;
 }
 
 -(instancetype)initWithVideoCodecInfo:(SCXVideoCodecInfo *)info{
     if (self = [super init]) {
         _codecInfo = info;
-         _packetizationMode = SCXH264PacketizationModeNonInterleaved;
+        _packetizationMode = SCXH264PacketizationModeNonInterleaved;
+        _profileId = kVTProfileLevel_H264_High_3_1;
     }
     if (![info.name isEqualToString:kH264Encoder]) {
         return nil;
@@ -95,6 +99,7 @@ VTEncodeInfoFlags infoFlags,
     _mode = settings.mode;
     _targetBitrateBps = settings.startBitrate * 1000;
     _maxFrameRate = settings.maxFramerate;
+    _encoderFrameRate = _maxFrameRate;
     [self resetCompressionSessionWithPixelFormat:kNV12PixelFormat];
     [self setBitrateBps:_targetBitrateBps frameRate:_maxFrameRate];
     return 1;
@@ -132,6 +137,24 @@ VTEncodeInfoFlags infoFlags,
         _encoderBitrateBps = bitrateBps;
     }
 }
+-(NSInteger)encode:(SCXVideoFrame *)frame codecSpecificInfo:(id<SCXCodecSpecificInfo>)info frameTypes:(NSArray<NSNumber *> *)frameTypes{
+    if ( !_compressionSession) {
+        return SCX_VIDEO_CODEC_UNINITIALIZED;
+    }
+    return SCX_VIDEO_CODEC_OK;
+}
+- (BOOL)resetCompressionSessionIfNeededWithFrame:(SCXVideoFrame *)frame {
+    BOOL resetCompressionSession = NO;
+    return YES;
+}
+- (OSType)pixelFormatOfFrame:(SCXVideoFrame *)frame{
+    if ([frame isKindOfClass:[SCXVideoFrame class]]) {
+        SCXCVPixelBuffer *pixelBuffer = (SCXCVPixelBuffer *)frame.buffer;
+        return CVPixelBufferGetPixelFormatType(pixelBuffer.pixelBuffer);
+    }
+    return kNV12PixelFormat;
+}
+
 - (int)resetCompressionSessionWithPixelFormat:(OSType)framePixelFormat{
     [self destroyCompressionSession];
     const size_t attributeSize = 3;
@@ -165,7 +188,12 @@ VTEncodeInfoFlags infoFlags,
     return SCX_VIDEO_CODEC_OK;
 }
 - (void)configureCompressionSession {
-    
+    SetVTSessionProperty(_compressionSession, kVTCompressionPropertyKey_RealTime, true);
+    SetVTSessionProperty(_compressionSession, kVTCompressionPropertyKey_ProfileLevel, _profileId);
+    SetVTSessionProperty(_compressionSession, kVTCompressionPropertyKey_AllowFrameReordering, false);
+    [self setEncoderBitrateBps:_targetBitrateBps frameRate:_encoderFrameRate];
+    SetVTSessionProperty(_compressionSession, kVTCompressionPropertyKey_MaxKeyFrameInterval, 7200);
+    SetVTSessionProperty(_compressionSession, kVTCompressionPropertyKey_MaxKeyFrameIntervalDuration, 24);
 }
 - (void)destroyCompressionSession{
     if (_compressionSession) {
@@ -173,5 +201,16 @@ VTEncodeInfoFlags infoFlags,
         CFRelease(_compressionSession);
         _compressionSession = nullptr;
     }
+}
+-(NSInteger)releaseEncoder{
+    [self destroyCompressionSession];
+    _callback = nullptr;
+    return SCX_VIDEO_CODEC_OK;
+}
+-(void)setCallback:(SCXVideoEncoderCallback)callback{
+    _callback = callback;
+}
+- (NSString *)implementationName {
+  return @"VideoToolbox";
 }
 @end
