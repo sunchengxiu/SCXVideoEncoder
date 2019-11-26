@@ -148,4 +148,10 @@ typedef NS_ENUM(NSInteger , SCXFileVideoCaptureStatus) {
     dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, DISPATCH_TIMER_STRICT, [self frameQueue]);
     return timer;
 }
+-(void)stopCapture{
+    _status = SCXFileVideoCaptureStatus_Stoped;
+}
+-(void)dealloc{
+    [self stopCapture];
+}
 @end
