@@ -7,8 +7,11 @@
 //
 
 #import "ViewController.h"
-
-@interface ViewController ()
+#import "SCXFileCapturer.h"
+#import "SCXFileVideoCapturer.h"
+@interface ViewController ()<SCXVideoCaptureDelegate>{
+    SCXFileCapturer *_fileCapture;
+}
 
 @end
 
@@ -16,8 +19,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    SCXFileVideoCapturer *fileVideoCapture = [[SCXFileVideoCapturer alloc] initWithDelegate:self];
+    _fileCapture = [[SCXFileCapturer alloc] initWithFileVideoCapture:fileVideoCapture];
+    [_fileCapture startCapture];
 }
 
-
+-(void)capture:(SCXVideoCapturer *)capture didCaptureVideoFrame:(SCXVideoFrame *)frame{
+    
+}
 @end
