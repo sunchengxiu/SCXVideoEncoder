@@ -67,6 +67,11 @@ void *params,
 OSStatus status,
 VTEncodeInfoFlags infoFlags,
                                CMSampleBufferRef sampleBuffer){
+    if (!params) {
+        return;
+    }
+    std::unique_ptr<SCXFrameEncodeParams> encodeParams(reinterpret_cast<SCXFrameEncodeParams *>(params));
+    [encodeParams->encoder frameWasEncoded:status flags:infoFlags sampleBuffer:sampleBuffer codecSpecificInfo:encodeParams->codecSpecificInfoH264 width:encodeParams->width height:encodeParams->height renderTimeMs:encodeParams->render_time_ms timeStamp:encodeParams->timeStamp rotation:encodeParams->rotation];
     
 }
 @implementation SCXVideoEncoderH264{
@@ -139,6 +144,35 @@ VTEncodeInfoFlags infoFlags,
         _encoderFrameRate = frameRate;
         _encoderBitrateBps = bitrateBps;
     }
+}
+-(void)frameWasEncoded:(OSStatus)status flags:(VTEncodeInfoFlags)infoFlags sampleBuffer:(CMSampleBufferRef)sampleBuffer codecSpecificInfo:(id<SCXCodecSpecificInfo>)codecSpecificInfo width:(int32_t)width height:(int32_t)height renderTimeMs:(int64_t)renderTimeMs timeStamp:(uint32_t)timeStamp rotation:(SCXVideoRotation)rotation{
+    if (status != noErr) {
+        return;
+    }
+    if (infoFlags & kVTEncodeInfo_FrameDropped) {
+        return;
+    }
+    BOOL isKeyFrame = NO;
+    CFArrayRef attachments = CMSampleBufferGetSampleAttachmentsArray(sampleBuffer, 0);
+    if (attachments != nullptr && CFArrayGetCount(attachments)) {
+        CFDictionaryRef attachment = static_cast<CFDictionaryRef>(CFArrayGetValueAtIndex(attachments, 0)) ;
+        isKeyFrame = !CFDictionaryContainsKey(attachment, kCMSampleAttachmentKey_NotSync);
+    }
+    CMBlockBufferRef block_buffer = CMSampleBufferGetDataBuffer(sampleBuffer);
+    CMBlockBufferRef contiguous_buffer = nullptr;
+    if (!CMBlockBufferIsRangeContiguous(block_buffer, 0, 0)) {
+        status = CMBlockBufferCreateContiguous(
+        nullptr, block_buffer, nullptr, nullptr, 0, 0, 0, &contiguous_buffer);
+        if (status != noErr) {
+            return;
+        }
+    } else {
+        contiguous_buffer = block_buffer;
+        CFRetain(contiguous_buffer);
+        block_buffer = nullptr;
+    }
+    size_t block_buffer_size = CMBlockBufferGetDataLength(contiguous_buffer);
+    NSLog(@"reportEncodedImage %d %zu %lld",isKeyFrame , block_buffer_size,renderTimeMs * 1000LL);
 }
 -(NSInteger)encode:(SCXVideoFrame *)frame codecSpecificInfo:(id<SCXCodecSpecificInfo>)info frameTypes:(NSArray<NSNumber *> *)frameTypes{
     if ( !_compressionSession) {
@@ -292,7 +326,11 @@ CVPixelBufferRef CreatePixelBuffer(CVPixelBufferPoolRef pixelBufferPool){
 -(void)setCallback:(SCXVideoEncoderCallback)callback{
     _callback = callback;
 }
-- (NSString *)implementationName {
-  return @"VideoToolbox";
+
+- (nonnull NSString *)implementionName {
+    return @"VideoToolbox";
 }
+
+
+
 @end

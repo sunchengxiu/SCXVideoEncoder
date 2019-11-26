@@ -7,14 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "SCXCodecSpecificInfo.h"
 NS_ASSUME_NONNULL_BEGIN
 /** Class for H264 specific config. */
 typedef NS_ENUM(NSUInteger, SCXH264PacketizationMode) {
   SCXH264PacketizationModeNonInterleaved = 0,  // Mode 1 - STAP-A, FU-A is allowed
   SCXH264PacketizationModeSingleNalUnit        // Mode 0 - only single NALU allowed
 };
-@interface SCXCodecSpecificInfoH264 : NSObject
+@interface SCXCodecSpecificInfoH264 : NSObject<SCXCodecSpecificInfo>
 
 /**
  mode
