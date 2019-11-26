@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-static NSString *kH264Encoder = @"h264";
+ static  NSString *kH264Encoder = @"H264";
 static NSString *kVP8Encoder = @"vp8";
 NS_ASSUME_NONNULL_BEGIN
 

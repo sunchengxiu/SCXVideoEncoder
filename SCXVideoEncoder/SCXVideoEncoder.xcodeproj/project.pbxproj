@@ -33,7 +33,11 @@
 		E8B1700923863AAA00AA222A /* SCXVideoEncoderQpThresholds.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B1700823863AAA00AA222A /* SCXVideoEncoderQpThresholds.m */; };
 		E8B1700C23866CD600AA222A /* SCXCodecSpecificInfoH264.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B1700B23866CD600AA222A /* SCXCodecSpecificInfoH264.m */; };
 		E8B170152387813900AA222A /* helpers.cc in Sources */ = {isa = PBXBuildFile; fileRef = E8B170142387813900AA222A /* helpers.cc */; };
-		E8E1901F2387DE3F00F75798 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8B17017238787B900AA222A /* VideoToolbox.framework */; };
+		E8FF08D6238D244700C2AE26 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8B17017238787B900AA222A /* VideoToolbox.framework */; };
+		E8FF08D8238D249D00C2AE26 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8FF08D7238D249C00C2AE26 /* Foundation.framework */; };
+		E8FF08DA238D24A300C2AE26 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8FF08D9238D24A300C2AE26 /* SystemConfiguration.framework */; };
+		E8FF08DC238D24AD00C2AE26 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8FF08DB238D24AD00C2AE26 /* CoreTelephony.framework */; };
+		E8FF08DE238D24B600C2AE26 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E8FF08DD238D24B600C2AE26 /* libz.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,6 +120,10 @@
 		E8B170132387813900AA222A /* helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = helpers.h; sourceTree = "<group>"; };
 		E8B170142387813900AA222A /* helpers.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = helpers.cc; sourceTree = "<group>"; };
 		E8B17017238787B900AA222A /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		E8FF08D7238D249C00C2AE26 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E8FF08D9238D24A300C2AE26 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		E8FF08DB238D24AD00C2AE26 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		E8FF08DD238D24B600C2AE26 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,7 +131,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E8E1901F2387DE3F00F75798 /* VideoToolbox.framework in Frameworks */,
+				E8FF08DE238D24B600C2AE26 /* libz.tbd in Frameworks */,
+				E8FF08DC238D24AD00C2AE26 /* CoreTelephony.framework in Frameworks */,
+				E8FF08DA238D24A300C2AE26 /* SystemConfiguration.framework in Frameworks */,
+				E8FF08D8238D249D00C2AE26 /* Foundation.framework in Frameworks */,
+				E8FF08D6238D244700C2AE26 /* VideoToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,6 +307,10 @@
 		E8B17016238787B900AA222A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E8FF08DD238D24B600C2AE26 /* libz.tbd */,
+				E8FF08DB238D24AD00C2AE26 /* CoreTelephony.framework */,
+				E8FF08D9238D24A300C2AE26 /* SystemConfiguration.framework */,
+				E8FF08D7238D249C00C2AE26 /* Foundation.framework */,
 				E8B17017238787B900AA222A /* VideoToolbox.framework */,
 			);
 			name = Frameworks;
