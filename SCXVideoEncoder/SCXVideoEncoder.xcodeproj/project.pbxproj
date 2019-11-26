@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E829D26A238B84CB009DADFD /* SCXCVPixelBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = E829D268238B84CA009DADFD /* SCXCVPixelBuffer.m */; };
 		E829D270238CC8EB009DADFD /* SCXVideoCapturer.m in Sources */ = {isa = PBXBuildFile; fileRef = E829D26E238CC8EB009DADFD /* SCXVideoCapturer.m */; };
+		E829D273238CC99E009DADFD /* SCXFileVideoCapturer.m in Sources */ = {isa = PBXBuildFile; fileRef = E829D272238CC99E009DADFD /* SCXFileVideoCapturer.m */; };
 		E8B16FB32385296200AA222A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B16FB22385296200AA222A /* AppDelegate.m */; };
 		E8B16FB62385296200AA222A /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B16FB52385296200AA222A /* SceneDelegate.m */; };
 		E8B16FB92385296200AA222A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B16FB82385296200AA222A /* ViewController.m */; };
@@ -55,6 +56,8 @@
 		E829D26D238CC8EA009DADFD /* SCXVideoCaptureDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCXVideoCaptureDelegate.h; sourceTree = "<group>"; };
 		E829D26E238CC8EB009DADFD /* SCXVideoCapturer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCXVideoCapturer.m; sourceTree = "<group>"; };
 		E829D26F238CC8EB009DADFD /* SCXVideoCapturer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCXVideoCapturer.h; sourceTree = "<group>"; };
+		E829D271238CC99E009DADFD /* SCXFileVideoCapturer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCXFileVideoCapturer.h; sourceTree = "<group>"; };
+		E829D272238CC99E009DADFD /* SCXFileVideoCapturer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCXFileVideoCapturer.m; sourceTree = "<group>"; };
 		E8B16FAE2385296200AA222A /* SCXVideoEncoder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SCXVideoEncoder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8B16FB12385296200AA222A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E8B16FB22385296200AA222A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -206,6 +209,8 @@
 				E829D26D238CC8EA009DADFD /* SCXVideoCaptureDelegate.h */,
 				E829D26F238CC8EB009DADFD /* SCXVideoCapturer.h */,
 				E829D26E238CC8EB009DADFD /* SCXVideoCapturer.m */,
+				E829D271238CC99E009DADFD /* SCXFileVideoCapturer.h */,
+				E829D272238CC99E009DADFD /* SCXFileVideoCapturer.m */,
 				E8B170042386345400AA222A /* SCXRtpFragmentationHeader.h */,
 				E8B170052386345400AA222A /* SCXRtpFragmentationHeader.m */,
 				E8B1700723863AAA00AA222A /* SCXVideoEncoderQpThresholds.h */,
@@ -392,6 +397,7 @@
 				E829D270238CC8EB009DADFD /* SCXVideoCapturer.m in Sources */,
 				E8B16FF22385337700AA222A /* SCXVideoCodecInfo.m in Sources */,
 				E8B16FC42385296500AA222A /* main.m in Sources */,
+				E829D273238CC99E009DADFD /* SCXFileVideoCapturer.m in Sources */,
 				E8B16FB62385296200AA222A /* SceneDelegate.m in Sources */,
 				E8B170152387813900AA222A /* helpers.cc in Sources */,
 				E8B1700C23866CD600AA222A /* SCXCodecSpecificInfoH264.m in Sources */,
