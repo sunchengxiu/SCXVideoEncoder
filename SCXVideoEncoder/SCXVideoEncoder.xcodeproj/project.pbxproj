@@ -12,6 +12,9 @@
 		E829D273238CC99E009DADFD /* SCXFileVideoCapturer.m in Sources */ = {isa = PBXBuildFile; fileRef = E829D272238CC99E009DADFD /* SCXFileVideoCapturer.m */; };
 		E829D276238D0DDC009DADFD /* SCXFileCapturer.m in Sources */ = {isa = PBXBuildFile; fileRef = E829D275238D0DDC009DADFD /* SCXFileCapturer.m */; };
 		E829D27B238D10B8009DADFD /* test.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E829D279238D100D009DADFD /* test.mp4 */; };
+		E829D284238D1B46009DADFD /* RTCMTLRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = E829D27D238D1B46009DADFD /* RTCMTLRenderer.mm */; };
+		E829D285238D1B46009DADFD /* RTCMTLVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = E829D27F238D1B46009DADFD /* RTCMTLVideoView.m */; };
+		E829D286238D1B46009DADFD /* RTCMTLNV12Renderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = E829D280238D1B46009DADFD /* RTCMTLNV12Renderer.mm */; };
 		E8B16FB32385296200AA222A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B16FB22385296200AA222A /* AppDelegate.m */; };
 		E8B16FB62385296200AA222A /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B16FB52385296200AA222A /* SceneDelegate.m */; };
 		E8B16FB92385296200AA222A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B16FB82385296200AA222A /* ViewController.m */; };
@@ -62,6 +65,16 @@
 		E829D274238D0DDC009DADFD /* SCXFileCapturer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCXFileCapturer.h; sourceTree = "<group>"; };
 		E829D275238D0DDC009DADFD /* SCXFileCapturer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCXFileCapturer.m; sourceTree = "<group>"; };
 		E829D279238D100D009DADFD /* test.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.mp4; sourceTree = "<group>"; };
+		E829D27D238D1B46009DADFD /* RTCMTLRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RTCMTLRenderer.mm; sourceTree = "<group>"; };
+		E829D27E238D1B46009DADFD /* RTCMTLVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCMTLVideoView.h; sourceTree = "<group>"; };
+		E829D27F238D1B46009DADFD /* RTCMTLVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTCMTLVideoView.m; sourceTree = "<group>"; };
+		E829D280238D1B46009DADFD /* RTCMTLNV12Renderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RTCMTLNV12Renderer.mm; sourceTree = "<group>"; };
+		E829D281238D1B46009DADFD /* RTCMTLNV12Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCMTLNV12Renderer.h; sourceTree = "<group>"; };
+		E829D282238D1B46009DADFD /* RTCMTLRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCMTLRenderer.h; sourceTree = "<group>"; };
+		E829D283238D1B46009DADFD /* RTCMTLRenderer+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RTCMTLRenderer+Private.h"; sourceTree = "<group>"; };
+		E829D287238D1C40009DADFD /* RTCVideoRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCVideoRenderer.h; sourceTree = "<group>"; };
+		E829D288238D1C67009DADFD /* RTCMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCMacros.h; sourceTree = "<group>"; };
+		E829D289238D1CE3009DADFD /* video_rotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_rotation.h; sourceTree = "<group>"; };
 		E8B16FAE2385296200AA222A /* SCXVideoEncoder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SCXVideoEncoder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8B16FB12385296200AA222A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E8B16FB22385296200AA222A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -139,6 +152,23 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		E829D27C238D1B33009DADFD /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E829D289238D1CE3009DADFD /* video_rotation.h */,
+				E829D288238D1C67009DADFD /* RTCMacros.h */,
+				E829D287238D1C40009DADFD /* RTCVideoRenderer.h */,
+				E829D281238D1B46009DADFD /* RTCMTLNV12Renderer.h */,
+				E829D280238D1B46009DADFD /* RTCMTLNV12Renderer.mm */,
+				E829D282238D1B46009DADFD /* RTCMTLRenderer.h */,
+				E829D27D238D1B46009DADFD /* RTCMTLRenderer.mm */,
+				E829D283238D1B46009DADFD /* RTCMTLRenderer+Private.h */,
+				E829D27E238D1B46009DADFD /* RTCMTLVideoView.h */,
+				E829D27F238D1B46009DADFD /* RTCMTLVideoView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		E8B16FA52385296200AA222A = {
 			isa = PBXGroup;
 			children = (
@@ -209,6 +239,7 @@
 		E8B16FEB23852F1A00AA222A /* VideoEncoder */ = {
 			isa = PBXGroup;
 			children = (
+				E829D27C238D1B33009DADFD /* View */,
 				E829D278238D0FC1009DADFD /* Resources */,
 				E8B16FF32385385200AA222A /* Protocol */,
 				E8B16FEC23852F2600AA222A /* Config */,
@@ -407,7 +438,9 @@
 				E8B16FF7238539C400AA222A /* SCXEncodedImage.m in Sources */,
 				E8B16FFA23853CA100AA222A /* SCXVideoFrame.m in Sources */,
 				E8B170062386345400AA222A /* SCXRtpFragmentationHeader.m in Sources */,
+				E829D285238D1B46009DADFD /* RTCMTLVideoView.m in Sources */,
 				E8B1700923863AAA00AA222A /* SCXVideoEncoderQpThresholds.m in Sources */,
+				E829D284238D1B46009DADFD /* RTCMTLRenderer.mm in Sources */,
 				E8B16FEF23852F5F00AA222A /* SCXVideoEncoderSettings.m in Sources */,
 				E8B16FB32385296200AA222A /* AppDelegate.m in Sources */,
 				E829D270238CC8EB009DADFD /* SCXVideoCapturer.m in Sources */,
@@ -415,6 +448,7 @@
 				E8B16FC42385296500AA222A /* main.m in Sources */,
 				E829D273238CC99E009DADFD /* SCXFileVideoCapturer.m in Sources */,
 				E8B16FB62385296200AA222A /* SceneDelegate.m in Sources */,
+				E829D286238D1B46009DADFD /* RTCMTLNV12Renderer.mm in Sources */,
 				E8B170152387813900AA222A /* helpers.cc in Sources */,
 				E8B1700C23866CD600AA222A /* SCXCodecSpecificInfoH264.m in Sources */,
 			);
