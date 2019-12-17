@@ -179,6 +179,7 @@ VTEncodeInfoFlags infoFlags,
         return SCX_VIDEO_CODEC_UNINITIALIZED;
     }
     BOOL isKeyFrameRequired = NO;
+     _pixelBufferPool = VTCompressionSessionGetPixelBufferPool(_compressionSession);
     if ([self resetCompressionSessionIfNeededWithFrame:frame]) {
         isKeyFrameRequired = YES;
     }
@@ -230,7 +231,7 @@ VTEncodeInfoFlags infoFlags,
     BOOL resetCompressionSession = NO;
     OSType framePixelFormat = [self pixelFormatOfFrame:frame];
     if (_compressionSession) {
-        NSDictionary *poolAttributes = (__bridge NSDictionary *)CVPixelBufferPoolGetAttributes(_pixelBufferPool);
+        NSDictionary *poolAttributes = (__bridge NSDictionary *)CVPixelBufferPoolGetPixelBufferAttributes(_pixelBufferPool);
            id pixelFormats = [poolAttributes objectForKey:(__bridge NSString *)kCVPixelBufferPixelFormatTypeKey];
            NSArray<NSNumber *> *compressionPixelFormats = nil;
            if ([pixelFormats isKindOfClass:[NSArray class]]) {
@@ -288,7 +289,6 @@ VTEncodeInfoFlags infoFlags,
         return SCX_VIDEO_CODEC_ERROR;
     }
     [self configureCompressionSession];
-    _pixelBufferPool = VTCompressionSessionGetPixelBufferPool(_compressionSession);
     return SCX_VIDEO_CODEC_OK;
 }
 - (void)configureCompressionSession {
