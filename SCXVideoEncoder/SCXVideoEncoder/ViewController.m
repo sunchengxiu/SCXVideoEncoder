@@ -10,9 +10,11 @@
 #import "SCXFileCapturer.h"
 #import "SCXFileVideoCapturer.h"
 #import "SCXVideoEncoderH264.h"
-@interface ViewController ()<SCXVideoCaptureDelegate>{
+@interface ViewController ()<SCXVideoCaptureDelegate , SCXVideoEncoderProtocol>{
     SCXFileCapturer *_fileCapture;
     SCXVideoEncoderH264 *_encoder;
+    NSFileHandle *_handle;
+    NSString *_path;
 }
 
 @end
@@ -21,6 +23,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _path = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).lastObject stringByAppendingPathComponent:@"h264test.h264"];
+    NSFileManager *manager = [NSFileManager defaultManager];
+    if ([manager fileExistsAtPath:_path]) {
+        if ([manager removeItemAtPath:_path error:nil]) {
+            if ([manager createFileAtPath:_path contents:nil attributes:nil]) {
+                NSLog(@"创建文件");
+            }
+        }
+    }else {
+        if ([manager createFileAtPath:_path contents:nil attributes:nil]) {
+            NSLog(@"创建文件");
+        }
+    }
+    
+    NSLog(@"%@", _path);
+    _handle = [NSFileHandle fileHandleForWritingAtPath:_path];
+    
     SCXFileVideoCapturer *fileVideoCapture = [[SCXFileVideoCapturer alloc] initWithDelegate:self];
     _fileCapture = [[SCXFileCapturer alloc] initWithFileVideoCapture:fileVideoCapture];
     [_fileCapture startCapture];
@@ -39,6 +59,7 @@
     settings.qpMax = 56;
     settings.mode = SCXVideoCodecModeRealtimeVideo;
     _encoder = encoder;
+    _encoder.delegate = self;
     [encoder startEncoderWithSettings:settings numberOfCores:2];
 }
 
@@ -46,5 +67,14 @@
     [_encoder encode:frame
         codecSpecificInfo:nil
           frameTypes:@[ @(SCXFrameTypeVideoFrameDelta) ]];
+}
+-(void)spsData:(NSData *)spsData ppsData:(NSData *)ppsData{
+    [_handle seekToEndOfFile];
+    [_handle writeData:spsData];
+    [_handle writeData:ppsData];
+}
+-(void)naluData:(NSData *)naluData{
+    [_handle seekToEndOfFile];
+    [_handle writeData:naluData];
 }
 @end

@@ -88,6 +88,7 @@ void compressionOutputCallback(void *encoder,
     CFStringRef _profileId;
     SCXVideoEncoderCallback _callback;
     CVPixelBufferPoolRef _pixelBufferPool;
+    dispatch_queue_t _callbackQueue;
 }
 
 -(instancetype)initWithVideoCodecInfo:(SCXVideoCodecInfo *)info{
@@ -95,6 +96,7 @@ void compressionOutputCallback(void *encoder,
         _codecInfo = info;
         _packetizationMode = SCXH264PacketizationModeNonInterleaved;
         _profileId = kVTProfileLevel_H264_High_3_1;
+        _callbackQueue = dispatch_queue_create("com.rongcloud.sunchengxiu.encoder.callback.queue", NULL);
     }
     if (![info.name isEqualToString:kH264Encoder]) {
         return nil;
@@ -173,6 +175,77 @@ void compressionOutputCallback(void *encoder,
     }
     size_t block_buffer_size = CMBlockBufferGetDataLength(contiguous_buffer);
     NSLog(@"reportEncodedImage %d %zu %lld",isKeyFrame , block_buffer_size,renderTimeMs * 1000LL);
+    //https://www.jianshu.com/p/1a004bf7cc73
+    if (isKeyFrame) {
+        CMFormatDescriptionRef format = CMSampleBufferGetFormatDescription(sampleBuffer);
+        
+        // 获取 sps,pps
+        const uint8_t *sps ;
+        const uint8_t *pps;
+        size_t spsSize ,ppsSize , spsCount,ppsCount;
+        OSStatus spsStatus = CMVideoFormatDescriptionGetH264ParameterSetAtIndex(format, 0, &sps, &spsSize, &spsCount, NULL);
+        OSStatus ppsStatus = CMVideoFormatDescriptionGetH264ParameterSetAtIndex(format, 1, &pps, &ppsSize, &spsCount, NULL);
+        if (spsStatus == noErr && ppsStatus == noErr) {
+            
+        }
+        // 写入文件
+        
+        // 1.拼接NALU的start code
+        const char bytes[] = "\x00\x00\x00\x01";
+        size_t length = (sizeof bytes) - 1;
+        
+        NSMutableData *spsData = [NSMutableData dataWithCapacity:4+ spsSize];
+        NSMutableData *ppsData  = [NSMutableData dataWithCapacity:4 + ppsSize];
+        [spsData appendBytes:bytes length:length];
+        [spsData appendBytes:sps length:spsSize];
+        
+        [ppsData appendBytes:bytes length:length];
+        [ppsData appendBytes:pps length:ppsSize];
+        dispatch_async(_callbackQueue, ^{
+            if (self.delegate && [self.delegate respondsToSelector:@selector(spsData:ppsData:)]) {
+                [self.delegate spsData:spsData ppsData:ppsData];
+            }
+        });
+        
+    }
+    // nulu
+    
+    // 从blockbuffer中获取起始位置的内存地址
+    size_t totalLength = 0;
+    size_t lengthAtOffset=0;
+    char *dataPointer;
+    CMBlockBufferRef blockBuffer = CMSampleBufferGetDataBuffer(sampleBuffer);
+    OSStatus status1 = CMBlockBufferGetDataPointer(blockBuffer, 0, &lengthAtOffset, &totalLength, &dataPointer);
+    if (status1 != noErr) {
+        NSLog(@"video encoder error, status = %d", (int)status1);
+        return;
+    }
+    static const int h264HeaderLength = 4;
+    size_t bufferOffset = 0;
+    while (bufferOffset < totalLength - h264HeaderLength) {
+        // 从起始位置拷贝4个长度，来计算nalu的长度
+        uint32_t naluLength = 0;
+        memcpy(&naluLength, dataPointer + bufferOffset, h264HeaderLength);
+        naluLength = CFSwapInt32BigToHost(naluLength);
+        
+        // 根据nalu的长度开始创建data
+        
+        // 将 nalu 写入文件
+        const char bytes[] = "\x00\x00\x00\x01";
+        NSMutableData *naluData = [NSMutableData dataWithCapacity:4 + naluLength];
+        [naluData appendBytes:bytes length:4];
+        [naluData appendBytes:dataPointer + bufferOffset + h264HeaderLength length:naluLength];
+        dispatch_async(_callbackQueue, ^{
+            if (self.delegate && [self.delegate respondsToSelector:@selector(naluData:)]) {
+                [self.delegate naluData:naluData];
+            }
+        });
+        bufferOffset += naluLength + h264HeaderLength;
+    }
+}
+
+- (void)writeNalu:(NSData *)data isKeyframe:(BOOL)isKeyFrame{
+    
 }
 -(NSInteger)encode:(SCXVideoFrame *)frame codecSpecificInfo:(id<SCXCodecSpecificInfo>)info frameTypes:(NSArray<NSNumber *> *)frameTypes{
     if ( !_compressionSession) {
