@@ -63,9 +63,9 @@ struct SCXFrameEncodeParams {
     SCXVideoRotation rotation;
 };
 void compressionOutputCallback(void *encoder,
-void *params,
-OSStatus status,
-VTEncodeInfoFlags infoFlags,
+                               void *params,
+                               OSStatus status,
+                               VTEncodeInfoFlags infoFlags,
                                CMSampleBufferRef sampleBuffer){
     if (!params) {
         return;
@@ -114,9 +114,9 @@ VTEncodeInfoFlags infoFlags,
 }
 
 - (void)setBitrateBps:(uint32_t)bitrateBps frameRate:(uint32_t)frameRate {
-  if (_encoderBitrateBps != bitrateBps || _encoderFrameRate != frameRate) {
-    [self setEncoderBitrateBps:bitrateBps frameRate:frameRate];
-  }
+    if (_encoderBitrateBps != bitrateBps || _encoderFrameRate != frameRate) {
+        [self setEncoderBitrateBps:bitrateBps frameRate:frameRate];
+    }
 }
 - (void)setEncoderBitrateBps:(uint32_t)bitrateBps frameRate:(uint32_t)frameRate{
     if (_compressionSession) {
@@ -162,7 +162,7 @@ VTEncodeInfoFlags infoFlags,
     CMBlockBufferRef contiguous_buffer = nullptr;
     if (!CMBlockBufferIsRangeContiguous(block_buffer, 0, 0)) {
         status = CMBlockBufferCreateContiguous(
-        nullptr, block_buffer, nullptr, nullptr, 0, 0, 0, &contiguous_buffer);
+                                               nullptr, block_buffer, nullptr, nullptr, 0, 0, 0, &contiguous_buffer);
         if (status != noErr) {
             return;
         }
@@ -179,7 +179,7 @@ VTEncodeInfoFlags infoFlags,
         return SCX_VIDEO_CODEC_UNINITIALIZED;
     }
     BOOL isKeyFrameRequired = NO;
-     _pixelBufferPool = VTCompressionSessionGetPixelBufferPool(_compressionSession);
+    _pixelBufferPool = VTCompressionSessionGetPixelBufferPool(_compressionSession);
     if ([self resetCompressionSessionIfNeededWithFrame:frame]) {
         isKeyFrameRequired = YES;
     }
@@ -232,20 +232,20 @@ VTEncodeInfoFlags infoFlags,
     OSType framePixelFormat = [self pixelFormatOfFrame:frame];
     if (_compressionSession) {
         NSDictionary *poolAttributes = (__bridge NSDictionary *)CVPixelBufferPoolGetPixelBufferAttributes(_pixelBufferPool);
-           id pixelFormats = [poolAttributes objectForKey:(__bridge NSString *)kCVPixelBufferPixelFormatTypeKey];
-           NSArray<NSNumber *> *compressionPixelFormats = nil;
-           if ([pixelFormats isKindOfClass:[NSArray class]]) {
-               compressionPixelFormats = (NSArray *)pixelFormats;
-           } else if ([pixelFormats isKindOfClass:[NSNumber class]]){
-               compressionPixelFormats = @[(NSNumber *)pixelFormats];
-           }
+        id pixelFormats = [poolAttributes objectForKey:(__bridge NSString *)kCVPixelBufferPixelFormatTypeKey];
+        NSArray<NSNumber *> *compressionPixelFormats = nil;
+        if ([pixelFormats isKindOfClass:[NSArray class]]) {
+            compressionPixelFormats = (NSArray *)pixelFormats;
+        } else if ([pixelFormats isKindOfClass:[NSNumber class]]){
+            compressionPixelFormats = @[(NSNumber *)pixelFormats];
+        }
         if (![compressionPixelFormats containsObject:[NSNumber numberWithLong:framePixelFormat]]) {
             resetCompressionSession = YES;
         }
     } else {
         resetCompressionSession = YES;
     }
-   
+    
     if (resetCompressionSession) {
         [self resetCompressionSessionWithPixelFormat:framePixelFormat];
     }
