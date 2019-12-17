@@ -45,12 +45,12 @@
     settings.maxFramerate = 60;
     settings.qpMax = 56;
     settings.mode = SCXVideoCodecModeRealtimeVideo;
-    
+    _encoder = encoder;
     [encoder startEncoderWithSettings:settings numberOfCores:2];
 }
 
 -(void)capture:(SCXVideoCapturer *)capture didCaptureVideoFrame:(SCXVideoFrame *)frame{
-    [_videoView renderFrame:frame];
+//    [_videoView renderFrame:frame];
     [_encoder encode:frame
         codecSpecificInfo:nil
           frameTypes:@[ @(SCXFrameTypeVideoFrameDelta) ]];

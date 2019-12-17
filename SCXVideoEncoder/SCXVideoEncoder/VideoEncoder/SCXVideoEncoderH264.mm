@@ -5,11 +5,11 @@
 //  Created by 孙承秀 on 2019/11/20.
 //  Copyright © 2019 RongCloud. All rights reserved.
 //
-
+#import <VideoToolbox/VideoToolbox.h>
 #import "SCXVideoEncoderH264.h"
 #import "SCXCodecSpecificInfoH264.h"
 #import "helpers.h"
-#import <VideoToolbox/VideoToolbox.h>
+
 #import "SCXVideoEncoderErrorCodes.h"
 #import "SCXCVPixelBuffer.h"
 
@@ -187,6 +187,7 @@ VTEncodeInfoFlags infoFlags,
         SCXCVPixelBuffer *selfPixelBuffer = (SCXCVPixelBuffer *)frame.buffer;
         if (selfPixelBuffer) {
             pixelBuffer = selfPixelBuffer.pixelBuffer;
+            CVBufferRetain(pixelBuffer);
         }
     }
     if (!pixelBuffer) {
