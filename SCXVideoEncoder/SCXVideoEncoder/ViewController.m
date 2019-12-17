@@ -9,11 +9,9 @@
 #import "ViewController.h"
 #import "SCXFileCapturer.h"
 #import "SCXFileVideoCapturer.h"
-#import "RTCMTLVideoView.h"
 #import "SCXVideoEncoderH264.h"
 @interface ViewController ()<SCXVideoCaptureDelegate>{
     SCXFileCapturer *_fileCapture;
-     RTCMTLVideoView* _videoView;
     SCXVideoEncoderH264 *_encoder;
 }
 
@@ -26,11 +24,6 @@
     SCXFileVideoCapturer *fileVideoCapture = [[SCXFileVideoCapturer alloc] initWithDelegate:self];
     _fileCapture = [[SCXFileCapturer alloc] initWithFileVideoCapture:fileVideoCapture];
     [_fileCapture startCapture];
-    
-    _videoView = [[RTCMTLVideoView alloc] initWithFrame:CGRectZero];
-       _videoView.frame = self.view.bounds;
-
-       [self.view addSubview:_videoView];
     
     SCXVideoCodecInfo *codecInfo = [[SCXVideoCodecInfo alloc] initWithName:@"H264"];
     SCXVideoEncoderH264 *encoder = [[SCXVideoEncoderH264 alloc] initWithVideoCodecInfo:codecInfo];
@@ -50,7 +43,6 @@
 }
 
 -(void)capture:(SCXVideoCapturer *)capture didCaptureVideoFrame:(SCXVideoFrame *)frame{
-//    [_videoView renderFrame:frame];
     [_encoder encode:frame
         codecSpecificInfo:nil
           frameTypes:@[ @(SCXFrameTypeVideoFrameDelta) ]];
